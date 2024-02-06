@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/taxes.js"></script>
+    <title>Salary Calculator</title>
+  </head>
+  <body>
+    <div id="calculate">
+      <h1>Salary Calculator</h1>
+
+      <label for="grossSalary">Enter Gross Salary:</label>
+      <input type="number" id="grossSalary" pattern="\d+(\.\d+)?" required />
+      <button onclick="calculateTaxes()">Calculate Taxes</button>
+    </div>
+    <div id="results">
+      
+    </div>
+  </body>
+</html>

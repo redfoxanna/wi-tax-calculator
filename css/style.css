@@ -1,0 +1,41 @@
+body {
+    background-image: url('../images/calculate.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+
+    font-family: Arial, sans-serif;
+    margin: 200px;
+
+}
+
+#calculate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#calculate h1,
+#calculate label,
+#calculate input,
+#calculate button {
+    margin: 10px 0;
+}
+
+button {
+    font-size: 16px; 
+    padding: 10px 20px;
+}
+
+#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#results h2,
+#results p {
+    margin: 10px 0;
+}
