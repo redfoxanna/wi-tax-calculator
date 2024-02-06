@@ -34,14 +34,15 @@ const calculateFederalTax = grossSalary => {
 // Calculates state tax based on the tax brackets
 const calculateStateTax = grossSalary => {
   if (grossSalary <= 11970) {
-    return calculateTaxForBracket(grossSalary, 0.0354);
+    stateTax = calculateTaxForBracket(grossSalary, 0.0354);
   } else if (grossSalary <= 23930) {
-    return calculateTaxForBracket(grossSalary - 11970, 0.0465);
+    stateTax = calculateTaxForBracket(grossSalary - 11970, 0.0465);
   } else if (grossSalary <= 0.0627) {
-    return calculateTaxForBracket(grossSalary - 23930, 0.0627);
+    stateTax = calculateTaxForBracket(grossSalary - 23930, 0.0627);
   } else {
-    return calculateTaxForBracket(grossSalary - 0, 0.0765).toFixed(2);
+    stateTax = calculateTaxForBracket(grossSalary - 0, 0.0765).toFixed(2);
   }
+  return stateTax.toFixed(2);
 };
 
 // Calculates Social Security tax based on predefined threshold and rate
@@ -101,7 +102,7 @@ const calculateTaxes = () => {
   // Calculate each of the tax types
   const federalTax = calculateFederalTax(grossSalary);
   const stateTax = calculateStateTax(grossSalary);
-  const socialSecurityTax = calculateSocialSecurityTax(grossSalary);
+  const socialSecurityTax = calculateSocialSecurityTax(grossSalary).toFixed(2);
   const medicareTax = calculateMedicareTax(grossSalary);
 
   // Calculate net pay after deducting taxes
