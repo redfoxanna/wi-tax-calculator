@@ -1,8 +1,7 @@
 body {
-    background-image: url('../images/calculate.png'); 
+    background-image: url('../images/calculate2.png'); 
     background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
 
     font-family: Arial, sans-serif;
     margin: 200px;
@@ -12,8 +11,8 @@ body {
 #calculate {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 #calculate h1,
@@ -21,21 +20,39 @@ body {
 #calculate input,
 #calculate button {
     margin: 10px 0;
+    display: block;
+}
+
+input {
+    width: 200px;
+    height: 28px;
+    border: 1px solid #5E5472;
+    border-radius: 10px;
+
 }
 
 button {
     font-size: 16px; 
     padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #A496D1;
 }
 
 #results {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 }
 
 #results h2,
 #results p {
     margin: 10px 0;
+}
+
+table, table tr, table td {
+    background-color: #A49EAA;
+    border: 2px solid #5E5472;
+    padding: 10px;
+    border-radius: 2px;;
 }
