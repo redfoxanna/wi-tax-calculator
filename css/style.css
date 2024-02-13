@@ -12,7 +12,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 #calculate h1,
@@ -26,7 +26,7 @@ body {
 input {
     width: 200px;
     height: 28px;
-    border: 1px solid #5E5472;
+    border: 2px solid #5E5472;
     border-radius: 10px;
 
 }
@@ -34,7 +34,7 @@ input {
 button {
     font-size: 16px; 
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: #A496D1;
 }
 
