@@ -11,12 +11,16 @@
     <div id="main">
     <div id="calculate">
       <h1>Salary Calculator</h1>
-
-      <input type="number" id="grossSalary" placeholder="Enter gross salary" required />
-      <button onclick="calculateTaxes()">Calculate Taxes</button>
+      <table>
+      <td>
+        <input type="number" id="grossSalary" placeholder="Enter gross salary" pattern="[0-9]+(\.[0-9]+)?" required />
+      </td>
+      <td>
+        <button onclick="calculateTaxes()">Calculate Taxes</button>
+      </td>
+    </table>
     </div>
     <div id="results">
-      
     </div>
   </div>
   </body>

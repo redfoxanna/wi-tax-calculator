@@ -5,30 +5,27 @@ body {
 
     font-family: Arial, sans-serif;
     margin: 200px;
-
+    display: flex-end;
 }
 
 #calculate {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: center;
 }
 
 #calculate h1,
 #calculate label,
-#calculate input,
-#calculate button {
+#calculate input {
     margin: 10px 0;
-    display: block;
 }
 
 input {
     width: 200px;
     height: 28px;
+    font-size: 16px;
     border: 2px solid #5E5472;
     border-radius: 10px;
-
 }
 
 button {
@@ -42,17 +39,12 @@ button {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: center;
-}
-
-#results h2,
-#results p {
-    margin: 10px 0;
+    flex-grow: 4;
 }
 
 table, table tr, table td {
     background-color: #A49EAA;
     border: 2px solid #5E5472;
     padding: 10px;
-    border-radius: 2px;;
+    border-radius: 10px;
 }

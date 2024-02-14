@@ -1,7 +1,7 @@
 // Calculates and returns the income for a specific tax bracket
 const calculateTaxForBracket = (income, rate) => income * rate;
 
-
+// Calculates and returns the tax based on bracket min, max and rate
 const calculateTaxFromBrackets = (brackets, grossSalary) => {
   let tax = 0;
 
@@ -14,7 +14,7 @@ const calculateTaxFromBrackets = (brackets, grossSalary) => {
     }
   }
 
-  return {formatted: tax.toFixed(2), unprocessed: tax};
+  return { formatted: tax.toFixed(2), unprocessed: tax };
 }
 
 // Calculates federal tax based on gross salary entered
@@ -43,73 +43,70 @@ const calculateStateTax = grossSalary => {
   return calculateTaxFromBrackets(stateBrackets, grossSalary);
 }
 
-// Calculates Social Security tax based on predefined threshold and rate
+// Calculates Social Security tax based on threshold and rate
 const calculateSocialSecurityTax = grossSalary => {
   const socialSecurityBrackets = [
-    {min: 0, max: 137000, rate: 0.062},
-    {min: 137000, max: Infinity, rate: 0}
+    { min: 0, max: 137000, rate: 0.062 },
+    { min: 137000, max: Infinity, rate: 0 }
   ]
 
   return calculateTaxFromBrackets(socialSecurityBrackets, grossSalary);
-};
+}
 
-// Calculates Medicare tax based on predefined threshold and rates
+// Calculates Medicare tax based on threshold and rates
 const calculateMedicareTax = grossSalary => {
   const medicareTaxBrackets = [
-    {min: 0, max: 200000, rate: 0.0145},
-    {min: 200000, max: Infinity, rate: .0235}
+    { min: 0, max: 200000, rate: 0.0145 },
+    { min: 200000, max: Infinity, rate: .0235 }
   ]
 
   return calculateTaxFromBrackets(medicareTaxBrackets, grossSalary);
+}
+
+// Calculates the netPay and totalTaxes taken and returns values
+const calculateTotalTaxesAndNetPay = (federalTax, stateTax, socialSecurityTax, medicareTax, grossSalary) => {
+  const taxesTaken = federalTax.unprocessed + stateTax.unprocessed + socialSecurityTax.unprocessed + medicareTax.unprocessed;
+  const netPay = grossSalary - taxesTaken;
+  return { taxesTaken, netPay };
 };
 
-
-/* 
- * Main function to calculate all taxes and update results on the webpage
-*/
-const calculateTaxes = () => {
-  const grossSalaryInput = document.getElementById("grossSalary");
-  const grossSalary = parseFloat(grossSalaryInput.value);
-
-  // Calculate each of the tax types
-  const federalTax = calculateFederalTax(grossSalary);
-  const stateTax = calculateStateTax(grossSalary);
-  const socialSecurityTax = calculateSocialSecurityTax(grossSalary);
-  const medicareTax = calculateMedicareTax(grossSalary);
-
-  // Calculate net pay after deducting taxes
-  let netPay = 0;
-  netPay = grossSalary - (federalTax.unprocessed + stateTax.unprocessed + socialSecurityTax.unprocessed + medicareTax.unprocessed);
-
-  // Define tax types for displaying to user
-  const taxTypes = [
+// All tax amuonts needed in the calcultions
+const formatTaxTypes = (grossSalary, federalTax, stateTax, socialSecurityTax, medicareTax, taxesTaken, netPay) => {
+  return [
+    { label: "Gross Pay", amount: grossSalary.toFixed(2) },
     { label: "Federal Tax", amount: federalTax.formatted },
     { label: "State Tax", amount: stateTax.formatted },
     { label: "Social Security Tax", amount: socialSecurityTax.formatted },
     { label: "Medicare Tax", amount: medicareTax.formatted },
+    { label: "Total Taxes", amount: taxesTaken.toFixed(2) },
     { label: "Net Pay", amount: netPay.toFixed(2) }
   ];
+};
 
-  // Update results on the webpage for gross salary after all taxes
+// Main method of the application to calculte the total taxes from gross salary
+const calculateTaxes = () => {
+  const grossSalaryInput = document.getElementById("grossSalary");
+  const grossSalary = parseFloat(grossSalaryInput.value);
+  const federalTax = calculateFederalTax(grossSalary);
+  const stateTax = calculateStateTax(grossSalary);
+  const socialSecurityTax = calculateSocialSecurityTax(grossSalary);
+  const medicareTax = calculateMedicareTax(grossSalary);
+  
+  const { taxesTaken, netPay } = calculateTotalTaxesAndNetPay(federalTax, stateTax, socialSecurityTax, medicareTax, grossSalary);
+  
+  const taxTypes = formatTaxTypes(grossSalary, federalTax, stateTax, socialSecurityTax, medicareTax, taxesTaken, netPay);
+
   updateResult(taxTypes);
-
-  // Clear the input field
+  // Reset for next calculation
   grossSalaryInput.value = "";
 };
 
-
-// Function to update or create a result element on the webpage
-const updateResult = (taxTypes) => {
-  let resultContainer = document.getElementById("results");
-
-  // Clear existing content in #results
+// Updates the #results div with the calculated results
+const updateResult = taxTypes => {
+  const resultContainer = document.getElementById("results");
   resultContainer.innerHTML = "";
-
-  // Create a table element
   const table = document.createElement("table");
-
-  // Create rows for each tax type
-  taxTypes.forEach((result) => {
+  taxTypes.forEach(result => {
     const row = document.createElement("tr");
     const cell1 = document.createElement("td");
     cell1.textContent = result.label;
@@ -118,8 +115,6 @@ const updateResult = (taxTypes) => {
     row.appendChild(cell1);
     row.appendChild(cell2);
     table.appendChild(row);
-  });
-
-  // Append the table to the #results div
+  })
   resultContainer.appendChild(table);
 };
