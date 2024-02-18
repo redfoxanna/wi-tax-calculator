@@ -46,14 +46,45 @@ button {
 
 table {
     width: 100%;
-    padding: 10px;
+    border-collapse: collapse;
+    font-size: 1.2em;
+    margin-bottom: 1.3em;
 }
+
 
 #total {
     font-weight: 700;
     color: #A92D3A;
+    border-top: 2px solid #5E5472;
 }
 
 #net {
-    font-weight: 900;
+    font-weight: bolder;
+    color: #fff;
+    background-color: #665756;
+}
+
+td {
+    padding-left: 1em;
+}
+
+#gross {
+    font-weight: bolder;
+    border-bottom: 2px solid #5E5472;
+}
+
+#gross td {
+    padding-top: 1em;
+}
+
+#total td {
+    padding-top: 1em;
+}
+
+
+#federal .result-value,
+#social .result-value,
+#state .result-value,
+#medicare .result-value {
+    color: #A92D3A;
 }

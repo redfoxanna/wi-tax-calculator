@@ -80,10 +80,10 @@ const calculateTotalTaxesAndNetPay = (federalTax, stateTax, socialSecurityTax, m
 const formatTaxTypes = (grossSalary, federalTax, stateTax, socialSecurityTax, medicareTax, taxesTaken, netPay) => {
   return [
     { label: "GROSS PAY", amount: grossSalary.toFixed(2), id: "gross"},
-    { label: "FEDERAL TAX", amount: federalTax.formatted, id: "federal"},
-    { label: "STATE TAX", amount: stateTax.formatted, id: "state"},
-    { label: "SOCIAL SECURITY TAX", amount: socialSecurityTax.formatted, id: "social"},
-    { label: "MEDICARE TAX", amount: medicareTax.formatted, id: "medicare"},
+    { label: "federal", amount: federalTax.formatted, id: "federal"},
+    { label: "state", amount: stateTax.formatted, id: "state"},
+    { label: "social security", amount: socialSecurityTax.formatted, id: "social"},
+    { label: "medicare", amount: medicareTax.formatted, id: "medicare"},
     { label: "TOTAL TAXES", amount: taxesTaken.toFixed(2), id: "total" },
     { label: "NET PAY", amount: netPay.toFixed(2), id: "net"}
   ];
@@ -117,8 +117,9 @@ const updateResult = taxTypes => {
     row.class = "result-row"
     const cell1 = document.createElement("td");
     cell1.textContent = result.label;
-    cell1.classList = "result-label"
+    cell1.classList = "result-label";
     const cell2 = document.createElement("td");
+    cell2.classList = "result-value";
     cell2.textContent = `$${result.amount}`;
     row.appendChild(cell1);
     row.appendChild(cell2);
