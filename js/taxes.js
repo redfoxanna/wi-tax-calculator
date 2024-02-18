@@ -1,3 +1,9 @@
+const init = () => {
+  let eventListener = document.querySelector("#calculateTaxes");
+  eventListener.addEventListener("click", calculateTaxes);
+}
+
+
 // Calculates and returns the income for a specific tax bracket
 const calculateTaxForBracket = (income, rate) => income * rate;
 
@@ -43,7 +49,7 @@ const calculateStateTax = grossSalary => {
   return calculateTaxFromBrackets(stateBrackets, grossSalary);
 }
 
-// Calculates Social Security tax based on threshold and rate
+// Calculates and returns Social Security tax based on threshold and rate
 const calculateSocialSecurityTax = grossSalary => {
   const socialSecurityBrackets = [
     { min: 0, max: 137000, rate: 0.062 },
@@ -53,7 +59,7 @@ const calculateSocialSecurityTax = grossSalary => {
   return calculateTaxFromBrackets(socialSecurityBrackets, grossSalary);
 }
 
-// Calculates Medicare tax based on threshold and rates
+// Calculates and returns Medicare tax based on threshold and rates
 const calculateMedicareTax = grossSalary => {
   const medicareTaxBrackets = [
     { min: 0, max: 200000, rate: 0.0145 },
@@ -63,23 +69,23 @@ const calculateMedicareTax = grossSalary => {
   return calculateTaxFromBrackets(medicareTaxBrackets, grossSalary);
 }
 
-// Calculates the netPay and totalTaxes taken and returns values
+// Calculates and returns the netPay and totalTaxes taken and returns values
 const calculateTotalTaxesAndNetPay = (federalTax, stateTax, socialSecurityTax, medicareTax, grossSalary) => {
   const taxesTaken = federalTax.unprocessed + stateTax.unprocessed + socialSecurityTax.unprocessed + medicareTax.unprocessed;
   const netPay = grossSalary - taxesTaken;
   return { taxesTaken, netPay };
 };
 
-// All tax amuonts needed in the calcultions
+// All tax amuonts needed in the calcultions, to be displayed to user in table
 const formatTaxTypes = (grossSalary, federalTax, stateTax, socialSecurityTax, medicareTax, taxesTaken, netPay) => {
   return [
-    { label: "Gross Pay", amount: grossSalary.toFixed(2) },
-    { label: "Federal Tax", amount: federalTax.formatted },
-    { label: "State Tax", amount: stateTax.formatted },
-    { label: "Social Security Tax", amount: socialSecurityTax.formatted },
-    { label: "Medicare Tax", amount: medicareTax.formatted },
-    { label: "Total Taxes", amount: taxesTaken.toFixed(2) },
-    { label: "Net Pay", amount: netPay.toFixed(2) }
+    { label: "GROSS PAY", amount: grossSalary.toFixed(2), id: "gross"},
+    { label: "FEDERAL TAX", amount: federalTax.formatted, id: "federal"},
+    { label: "STATE TAX", amount: stateTax.formatted, id: "state"},
+    { label: "SOCIAL SECURITY TAX", amount: socialSecurityTax.formatted, id: "social"},
+    { label: "MEDICARE TAX", amount: medicareTax.formatted, id: "medicare"},
+    { label: "TOTAL TAXES", amount: taxesTaken.toFixed(2), id: "total" },
+    { label: "NET PAY", amount: netPay.toFixed(2), id: "net"}
   ];
 };
 
@@ -91,9 +97,9 @@ const calculateTaxes = () => {
   const stateTax = calculateStateTax(grossSalary);
   const socialSecurityTax = calculateSocialSecurityTax(grossSalary);
   const medicareTax = calculateMedicareTax(grossSalary);
-  
+
   const { taxesTaken, netPay } = calculateTotalTaxesAndNetPay(federalTax, stateTax, socialSecurityTax, medicareTax, grossSalary);
-  
+
   const taxTypes = formatTaxTypes(grossSalary, federalTax, stateTax, socialSecurityTax, medicareTax, taxesTaken, netPay);
 
   updateResult(taxTypes);
@@ -105,16 +111,22 @@ const calculateTaxes = () => {
 const updateResult = taxTypes => {
   const resultContainer = document.getElementById("results");
   resultContainer.innerHTML = "";
-  const table = document.createElement("table");
   taxTypes.forEach(result => {
     const row = document.createElement("tr");
+    row.id = `${result.id}`;
+    row.class = "result-row"
     const cell1 = document.createElement("td");
     cell1.textContent = result.label;
+    cell1.classList = "result-label"
     const cell2 = document.createElement("td");
     cell2.textContent = `$${result.amount}`;
     row.appendChild(cell1);
     row.appendChild(cell2);
-    table.appendChild(row);
-  })
-  resultContainer.appendChild(table);
-};
+    resultContainer.appendChild(row);
+  });
+}
+
+// Automatically loads init() when window loads
+window.onload = () => {
+  init();
+}
